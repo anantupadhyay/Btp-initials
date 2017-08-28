@@ -101,7 +101,7 @@ estimator = 30
 dt = DecisionTreeClassifier() 
 clf1 = RandomForestClassifier(n_estimators=estimator)
 clf2 = GradientBoostingClassifier(n_estimators=estimator, learning_rate=1.0, max_depth=2)
-clf3 = AdaBoostClassifier(n_estimators=100, base_estimator=dt,learning_rate=1)
+clf3 = AdaBoostClassifier(n_estimators=10, base_estimator=dt,learning_rate=1)
 
 #clf1 = MultinomialNB()
 
