@@ -75,6 +75,7 @@ def train(cat,clf):
 			else:
 				tn += 1
 	global su
+	su = 0
 	print tp, fp, tn, fn
 	acc = (((tp+tn)*1.0)/(tp+tn+fp+fn))*100
 	print "The acc is ", acc, "\n"
@@ -97,28 +98,34 @@ for row in reader:
 f.close()
 r.close()
 cat_arr = ['Shopping','Business','Computers','Adult','Health','Society']
-estimator = 30
+estimator = 10
 dt = DecisionTreeClassifier() 
 clf1 = RandomForestClassifier(n_estimators=estimator)
 clf2 = GradientBoostingClassifier(n_estimators=estimator, learning_rate=1.0, max_depth=2)
-clf3 = AdaBoostClassifier(n_estimators=10, base_estimator=dt,learning_rate=1)
+clf3 = AdaBoostClassifier(n_estimators=estimator, base_estimator=dt,learning_rate=1)
 
 #clf1 = MultinomialNB()
 
 
+a1,a2,a3,a4=0,0,0,0
 for cat in cat_arr:
 	print ('In Category ', cat)
 	print ("RandomForest ", )
 	c1 = train(cat, clf1)
-	
+	a1 += su
 	print ("LDABoosting ", )
 	c2 = train(cat, clf2)
-	
+	a2 += su
 	print ("AdaBoost ", )
 	c3 = train(cat, clf3)
-	
+	a3 += su	
 
 	print ("Building Voting Classifier")
 	eclf = VotingClassifier(estimators=[('lda', c1), ('rf', c2), ('ada', c3)], voting='soft')
 	ec = train(cat, eclf)
-	
+	a4 += su
+
+print ("The overall acc of ", clf1, " is", a1/6)
+print ("The overall acc of ", clf2, " is", a2/6)
+print ("The overall acc of ", clf3, " is", a3/6)
+print ("The overall acc of Voting Classifier", " is", a4/6)
