@@ -99,7 +99,7 @@ f.close()
 r.close()
 cat_arr = ['Shopping','Business','Computers','Adult','Health','Society']
 estimator = 10
-dt = MultinomialNB() 
+dt = LogisticRegression() 
 clf1 = RandomForestClassifier(n_estimators=estimator)
 clf2 = GradientBoostingClassifier(n_estimators=estimator, learning_rate=1.0, max_depth=2)
 clf3 = AdaBoostClassifier(n_estimators=estimator, base_estimator=dt,learning_rate=1)
